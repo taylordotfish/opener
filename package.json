@@ -1,0 +1,6 @@
+{
+  "name": "opener",
+  "dependencies": {
+    "escodegen": "^2.0.0"
+  }
+}
