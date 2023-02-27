@@ -1,0 +1,42 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=61.2.0", "setuptools_scm[toml]>=3.4.3"]
+
+[project]
+name = "Opener"
+description = "A JavaScript deobfuscator "
+readme = "README.md"
+keywords = ["JavaScript", "ECMAScript", "deobfuscation"]
+license = {text = "AGPL-3.0-or-later"}
+authors = [{name = "taylor.fish"}]
+requires-python = ">=3.4"
+dependencies = [
+  "esprima", # @ git+https://github.com/Kronuz/esprima-python
+]
+dynamic = [
+  "version",
+]
+classifiers = [
+	"Programming Language :: Python",
+	"Programming Language :: Python :: 3",
+	"Development Status :: 4 - Beta",
+	"Environment :: Other Environment",
+	"Intended Audience :: Developers",
+	"License :: OSI Approved",
+	"Operating System :: OS Independent",
+	"Topic :: Software Development :: Libraries :: Python Modules",
+]
+[project.urls]
+Homepage = "https://github.com/taylordotfish/opener"
+
+[project.scripts]
+pyjsopener = "opener.__main__:main"
+
+[tool.setuptools]
+zip-safe = true
+include-package-data = false
+
+[tool.setuptools.packages]
+find = {namespaces = false}
+
+[tool.setuptools_scm]
