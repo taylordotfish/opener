@@ -78,7 +78,6 @@ Installation
 Opener requires:
 
 * Python ≥ 3.9
-* Node.js ≥ 12
 
 Clone the repository and enter the directory:
 
@@ -97,12 +96,6 @@ Install the wheel
 
 ```bash
 pip3 install --upgrade ./dist/*.whl
-```
-
-And install the required NPM packages:
-
-```bash
-npm install
 ```
 
 Then, you can run `pyjsopener` (or `python3 -m opener`) from any dir.

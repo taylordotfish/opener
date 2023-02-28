@@ -12,6 +12,8 @@ authors = [{name = "taylor.fish"}]
 requires-python = ">=3.4"
 dependencies = [
   "esprima", # @ git+https://github.com/Kronuz/esprima-python
+  #"jscodegen", # @ git+https://github.com/ksons/jscodegen.py
+  "escodegen", # @ git+https://github.com/0o120/escodegen-python
 ]
 dynamic = [
   "version",
