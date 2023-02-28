@@ -63,18 +63,6 @@ def usage(*, exit: bool, error: bool):
         sys.exit(int(error))
 
 
-def run_codegen_js(ast_dict: dict):
-    path = pkg_resources.resource_filename(__name__, "codegen.js")
-    proc = subprocess.Popen(
-        ["node", path],
-        stdin=subprocess.PIPE,
-        encoding="utf8",
-    )
-    json.dump(ast_dict, proc.stdin, cls=JsonEncoder)
-    proc.stdin.close()
-    proc.wait()
-
-
 def main():
     positional_args = []
     temp_prefix = DEFAULT_TEMP_PREFIX
@@ -139,6 +127,7 @@ def main():
     if verbose:
         print("Making AST JSON-serializable...", file=sys.stderr)
     ast_dict = to_dict(ast)
+    #ast_dict = esprima.toDict(ast)  # ToDo, when we get rid of `Pattern`s
 
     if emit_ast:
         if verbose:
@@ -147,7 +136,15 @@ def main():
     else:
         if verbose:
             print("Formatting code...", file=sys.stderr)
-        run_codegen_js(ast_dict)
+
+        try:
+            import escodegen
+        except ImportError:
+            from warnings import warn
+            warn("jscodegen has some issues and produces incorrect results (at least the version in the upstream repo when this remark was added here), better use https://github.com/0o120/escodegen-python")
+            import jscodegen as escodegen
+
+        print(escodegen.generate(ast_dict))
 
 
 if __name__ == "__main__":
