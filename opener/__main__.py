@@ -40,21 +40,11 @@ Options:
 
 
 def _import():
-    global to_dict, transform
-    from .to_dict import to_dict
+    global transform
     from .transformations import transform
     global esprima, pkg_resources
     import esprima
     import pkg_resources
-
-
-class JsonEncoder(json.JSONEncoder):
-    def default(self, obj):
-        # Regex patterns aren't JSON-serializable, but escodegen shouldn't
-        # need them.
-        if isinstance(obj, re.Pattern):
-            return "THIS_SHOULD_NOT_APPEAR_IN_GENERATED_CODE!"
-        return super().default(obj)
 
 
 def usage(*, exit: bool, error: bool):
@@ -126,12 +116,12 @@ def main():
 
     if verbose:
         print("Making AST JSON-serializable...", file=sys.stderr)
-    ast_dict = to_dict(ast)
+    ast_dict = esprima.toDict(ast)
 
     if emit_ast:
         if verbose:
             print("Printing AST...", file=sys.stderr)
-        json.dump(ast_dict, sys.stdout, cls=JsonEncoder)
+        json.dump(ast_dict, sys.stdout)
     else:
         if verbose:
             print("Formatting code...", file=sys.stderr)
