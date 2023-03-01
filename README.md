@@ -87,12 +87,16 @@ git clone https://github.com/taylordotfish/opener
 cd opener
 ```
 
-Install the required Python packages (you can use `requirements.freeze.txt`
-instead to install specific versions of the dependencies that have been
-verified to work):
+Build a wheel
 
 ```bash
-pip3 install -r requirements.txt
+python3 -m build -nwx .
+```
+
+Install the wheel
+
+```bash
+pip3 install --upgrade ./dist/*.whl
 ```
 
 And install the required NPM packages:
@@ -101,12 +105,12 @@ And install the required NPM packages:
 npm install
 ```
 
-Then, you can run `./opener.py`.
+Then, you can run `pyjsopener` (or `python3 -m opener`) from any dir.
 
 Usage
 -----
 
-See `./opener.py --help`. The deobfuscated code is written to standard output.
+See `pyjsopener --help`. The deobfuscated code is written to standard output.
 
 License
 -------
