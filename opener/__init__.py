@@ -16,8 +16,6 @@
 # along with Opener. If not, see <https://www.gnu.org/licenses/>.
 
 # flake8: noqa
-from .__main__ import main
-
 
 # Wrapper that calls `.transformations.transform`. We avoid importing
 # `.transformations` directly since it would negatively impact startup time,
