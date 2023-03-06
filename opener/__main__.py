@@ -36,6 +36,7 @@ Options:
                         code. [default: {1}]
               -a --ast  Output a JSON representation of the AST instead of JS.
           -v --verbose  Output additional messages to standard error.
+  --use-closure-compiler Use Google Closure Compiler to optimize source. Eliminates some of obfuscations.
 """.format(os.path.basename(sys.argv[0]), DEFAULT_TEMP_PREFIX)
 
 
@@ -58,6 +59,7 @@ def main():
     temp_prefix = DEFAULT_TEMP_PREFIX
     emit_ast = False
     verbose = False
+    use_closure_compiler = False
 
     args = []
     for arg in sys.argv[1:]:
@@ -95,6 +97,8 @@ def main():
             emit_ast = True
         elif arg in ["-v", "--verbose"]:
             verbose = True
+        elif arg in ["--use-closure-compiler"]:
+            use_closure_compiler = True
         else:
             print(f"Unrecognized option: {arg}", file=sys.stderr)
             usage(exit=True, error=True)
@@ -106,6 +110,15 @@ def main():
         source = f.read()
 
     _import()
+
+    if use_closure_compiler:
+        from ClosureCompiler import Compiler, createCompilerOptions, CompilationLevel
+        c = Compiler(createCompilerOptions(level=CompilationLevel.ADVANCED_OPTIMIZATIONS))
+        clcomp_res = c({
+            "index.js": source,
+        })
+        source = clcomp_res.js
+
     if verbose:
         print("Parsing...", file=sys.stderr)
     ast = esprima.parseScript(source)

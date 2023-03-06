@@ -28,6 +28,10 @@ classifiers = [
 	"Operating System :: OS Independent",
 	"Topic :: Software Development :: Libraries :: Python Modules",
 ]
+
+[project.dependencies]
+"Closure-Compiler" = ["ClosureCompiler"] # @ git+https://github.com/KOLANICH-libs/ClosureCompiler.py
+
 [project.urls]
 Homepage = "https://github.com/taylordotfish/opener"
 
